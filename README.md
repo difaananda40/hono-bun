@@ -1,3 +1,16 @@
+# Auth Test Backend
+
+This project is built with **Hono** & **Bun** and uses **Prisma** for ORM.
+
+## Technologies
+
+- **Runtime**: Bun
+- **Framework**: Hono
+- **ORM**: Prisma
+- **Language**: TypeScript
+
+## Getting Started
+
 To install dependencies:
 ```sh
 bun install
@@ -8,4 +21,8 @@ To run:
 bun run dev
 ```
 
-open http://localhost:3000
+Open http://localhost:3000
+
+## Database
+
+This project uses Prisma as the ORM. Make sure to set up your database configuration and run migrations as needed.
