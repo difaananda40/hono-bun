@@ -1,6 +1,13 @@
 import { createMiddleware } from "hono/factory";
 
 export const parseBodyMiddleware = createMiddleware(async (c, next) => {
+  const method = c.req.method.toUpperCase();
+  // Only parse body for methods that typically have one
+  if (method === "GET") {
+    await next();
+    return;
+  }
+
   const contentType = c.req.header("content-type") || "";
   let parsed: unknown = null;
 
