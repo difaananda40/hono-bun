@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import type { User } from "@/generated/prisma";
 import { RegisterUserRequest, LoginUserRequest } from "./auth.model";
 import { AuthService } from "./auth.service";
 import { Response } from "@/core/response";
@@ -6,7 +7,6 @@ import { sign } from "hono/jwt";
 import { setCookie } from "hono/cookie";
 import { env } from "hono/adapter";
 import { authMiddleware } from "@/middleware/auth.middleware";
-import { sleep } from "bun";
 
 export const authController = new Hono();
 
@@ -57,7 +57,12 @@ authController.post("/login", async (c) => {
 });
 
 authController.get("/profile", authMiddleware, async (c) => {
+  const user = c.get("user") as User;
+
   return c.json(
-    Response.success({ message: "User profile retrieved successfully" }),
+    Response.success({
+      message: "User profile retrieved successfully",
+      data: user,
+    }),
   );
 });
