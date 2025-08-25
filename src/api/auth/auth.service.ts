@@ -69,8 +69,4 @@ export class AuthService {
 
     return toAuthResponse(user);
   }
-
-  // static async profile(): Promise<AuthResponse> {
-  //   return toAuthResponse(user);
-  // }
 }
