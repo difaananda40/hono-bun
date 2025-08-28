@@ -10,10 +10,10 @@ const app = new Hono().basePath("/api");
 app.use(
   "*",
   cors({
-    origin: "http://localhost:3000", // asal frontend Next.js
+    origin: "http://localhost:3000",
     allowMethods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // kalau pakai cookie/session
+    credentials: true,
   }),
 );
 

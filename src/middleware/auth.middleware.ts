@@ -1,8 +1,7 @@
-import { getCookie } from "hono/cookie";
+import { getCookie, deleteCookie, setCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import { HTTPException } from "hono/http-exception";
 import { verify, jwt } from "hono/jwt";
-import { env } from "hono/adapter";
 
 export const authMiddleware = createMiddleware(async (c, next) => {
   let token: string | undefined;
@@ -22,20 +21,20 @@ export const authMiddleware = createMiddleware(async (c, next) => {
     });
   }
 
-  const { SECRET_KEY } = env<{ SECRET_KEY: string }>(c);
-  const decoded = await verify(token, SECRET_KEY);
+  try {
+    const decoded = await verify(token, process.env.SECRET_KEY!);
 
-  if (!decoded) {
+    c.set("user", {
+      id: decoded.sub,
+      username: decoded.username,
+      name: decoded.name,
+    });
+  } catch {
+    deleteCookie(c, "auth_token");
     throw new HTTPException(401, {
       message: "Unauthorized",
     });
   }
-
-  c.set("user", {
-    id: decoded.sub,
-    username: decoded.username,
-    name: decoded.name,
-  });
 
   await next();
 });

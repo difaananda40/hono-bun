@@ -7,8 +7,22 @@ import {
 } from "./auth.model";
 import { AuthValidation } from "./auth.validation";
 import { HTTPException } from "hono/http-exception";
+import { sign } from "hono/jwt";
 
 export class AuthService {
+  static async generateToken(user: AuthResponse): Promise<string> {
+    const payload = {
+      sub: user.id,
+      username: user.username,
+      name: user.name,
+      exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // 1 day
+    };
+
+    const token = await sign(payload, process.env.SECRET_KEY!);
+
+    return token;
+  }
+
   static async register(request: RegisterUserRequest): Promise<AuthResponse> {
     const parsed = AuthValidation.REGISTER.parse(
       request,
