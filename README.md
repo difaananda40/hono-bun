@@ -21,7 +21,7 @@ To run:
 bun run dev
 ```
 
-Open http://localhost:4320
+Open http://localhost:3000
 
 ## Database
 
