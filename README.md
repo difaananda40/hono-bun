@@ -1,4 +1,4 @@
-# Auth Test Backend
+# Hono Backend with Bun
 
 This project is built with **Hono** & **Bun** and uses **Prisma** for ORM.
 
@@ -21,7 +21,7 @@ To run:
 bun run dev
 ```
 
-Open http://localhost:3000
+Open http://localhost:4320
 
 ## Database
 
